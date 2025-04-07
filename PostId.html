@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Veure Post en Detall</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/png"/>
+</head>
+<body>
+    <h1>Veure Post en Detall</h1>
+    <ul id="post"></ul>
+
+    <script>
+        function obtenirPostId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("post_id");
+        }
+
+        async function carregarPost() {
+            const postId = obtenirPostId();
+
+            try {
+                const resposta = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+                if (!resposta.ok) throw new Error("Error en carregar el post");
+
+                const post = await resposta.json();
+                const llista = document.getElementById("post");
+
+                const element = document.createElement("li");
+                element.innerHTML = `
+                    <strong>${post.title}</strong><br>
+                    <p>${post.body}</p>
+                    <p>
+                `;
+                llista.appendChild(element);
+
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+        carregarPost();
+    </script>
+</body>
+</html>

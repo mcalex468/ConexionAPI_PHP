@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Llista de Posts</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/png"/>
+</head>
+<body>
+    <h1>Llista de Posts</h1>
+    <ul id="posts"></ul>
+
+    <script>
+        async function carregarPosts() {
+            try {
+                const resposta = await fetch('https://jsonplaceholder.typicode.com/posts');
+                if (!resposta.ok) throw new Error("Error en carregar els posts");
+
+                const posts = await resposta.json();
+                const llista = document.getElementById("posts");
+
+                if (posts.length === 0) {
+                    llista.innerHTML = "<h3>No hi ha posts per mostrar.</h3>";
+                    return;
+                }
+                posts.forEach(post => {
+                    const element = document.createElement("li");
+                    element.innerHTML = `
+                        <p><strong><a href="PostId.html?post_id=${post.id}">${post.title}</a></strong></p>
+                        <p>${post.userId}</p>
+                        <p>${post.body}</p>
+                        <hr/>
+                    `;
+                    llista.appendChild(element);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        carregarPosts();
+    </script>
+</body>
+</html>
