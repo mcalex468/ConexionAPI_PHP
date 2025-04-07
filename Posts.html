@@ -25,8 +25,8 @@
                 posts.forEach(post => {
                     const element = document.createElement("li");
                     element.innerHTML = `
-                        <p><strong><a href="PostId.html?post_id=${post.id}">${post.title}</a></strong></p>
-                        <p>${post.userId}</p>
+                        <p><strong><a href="PostTitle.html?post_id=${post.id}">${post.title}</a></strong></p>
+                        </p><strong><a href="PostsUsers.html?user_id=${post.userId}">${post.userId}</a></strong></p>
                         <p>${post.body}</p>
                         <hr/>
                     `;
